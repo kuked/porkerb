@@ -28,5 +28,10 @@ module Porkerb
     def rank?(rank)
       @rank.rank == rank
     end
+
+    def self.from(card_notation)
+      regexp = /(?<suit>[SHCD])(?<rank>[AKQJ]|10|[2-9])/
+      card_notation.match(regexp) { |m| Card.new(m[:suit], m[:rank]) }
+    end
   end
 end

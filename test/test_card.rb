@@ -6,10 +6,10 @@ class TestCard < Minitest::Test
   include Porkerb
 
   def setup
-    @ace_of_spades = Card.new("S", "A")
-    @three_of_spades = Card.new("S", "3")
-    @ace_of_hearts = Card.new("H", "A")
-    @jack_of_hearts = Card.new("H", "J")
+    @ace_of_spades   = Card.from("SA")
+    @three_of_spades = Card.from("S3")
+    @ace_of_hearts   = Card.from("HA")
+    @jack_of_hearts  = Card.from("HJ")
   end
 
   def test_card_notation
