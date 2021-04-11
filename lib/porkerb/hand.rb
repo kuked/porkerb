@@ -1,5 +1,3 @@
-require_relative "card"
-
 module Porkerb
   class Hand
     def initialize(cards)
