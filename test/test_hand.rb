@@ -6,12 +6,12 @@ class TestHand < Minitest::Test
   include Porkerb
 
   def setup
-    @straightflush = Hand.new([Card.new("D", "A"), Card.new("D", "K")])
-    @straight_of_ace_high = Hand.new([Card.new("D", "A"), Card.new("S", "K")])
-    @straight_of_ace_low = Hand.new([Card.new("H", "2"), Card.new("C", "A")])
-    @pair_of_ace = Hand.new([Card.new("S", "A"), Card.new("H", "A")])
-    @flush_of_clover = Hand.new([Card.new("C", "2"), Card.new("C", "4")])
-    @highcard = Hand.new([Card.new("S", "A"), Card.new("C", "8")])
+    @straightflush        = Hand.from(%w[DA DK])
+    @straight_of_ace_high = Hand.from(%w[DA SK])
+    @straight_of_ace_low  = Hand.from(%w[H2 CA])
+    @pair_of_ace          = Hand.from(%w[SA HA])
+    @flush_of_clover      = Hand.from(%w[C2 C4])
+    @highcard             = Hand.from(%w[SA C8])
   end
 
   def test_straightflush?

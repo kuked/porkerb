@@ -1,3 +1,5 @@
+require_relative "card"
+
 module Porkerb
   class Hand
     def initialize(cards)
@@ -26,6 +28,11 @@ module Porkerb
       same_rank = @cards.all? { |c| c.same_rank? card }
       same_suit = @cards.all? { |c| c.same_suit? card }
       !same_rank && !same_suit
+    end
+
+    def self.from(card_notations)
+      cards = card_notations.map { |c| Card.from c }
+      Hand.new cards
     end
 
     private
