@@ -26,4 +26,8 @@ class TestCard < Minitest::Test
     assert @ace_of_spades.same_rank? @ace_of_hearts
     refute @ace_of_spades.same_rank? @three_of_spades
   end
+
+  def test_priolity
+    assert_equal 0, Card.new("H", "A").priolity
+  end
 end
