@@ -1,4 +1,4 @@
-require_relative "rank"
+require_relative "card_rank"
 
 module Porkerb
   class Card
@@ -6,7 +6,7 @@ module Porkerb
 
     def initialize(suit, rank)
       @suit = suit
-      @rank = Rank.new(rank)
+      @rank = CardRank.new(rank)
     end
 
     def notation

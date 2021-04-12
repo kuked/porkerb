@@ -1,5 +1,5 @@
 module Porkerb
-  class Rank
+  class CardRank
     include Comparable
 
     @@priolity = {
