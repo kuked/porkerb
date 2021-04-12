@@ -1,7 +1,10 @@
+require_relative "hand_rank"
+
 module Porkerb
   class Hand
     def initialize(cards)
       @cards = cards
+      @rank = HandRank.new(decide)
     end
 
     def straightflush?
@@ -36,7 +39,7 @@ module Porkerb
     private
 
     def _straight?
-      sorted = @cards.sort_by(&:rank)
+      sorted = @cards.sort
       if sorted.first.rank?("A") && sorted.last.rank?("2")
         sorted.shift
       end
@@ -50,6 +53,14 @@ module Porkerb
     def _flush?
       card = @cards.first
       @cards.all? { |c| c.same_suit? card }
+    end
+
+    def decide
+      return "straight flush" if straightflush?
+      return "straight"       if straight?
+      return "flush"          if flush?
+      return "one pair"       if pair?
+      return "high card"
     end
   end
 end
