@@ -21,7 +21,7 @@ module Porkerb
     end
 
     def <=>(other)
-      priolity <=> other.priolity
+      other.priolity <=> priolity
     end
 
     def to_s

@@ -46,4 +46,11 @@ class TestHand < Minitest::Test
     refute @pair_of_ace.highcard?
     refute @flush_of_clover.highcard?
   end
+
+  def test_comparable
+    assert @straight_of_ace_high < @straightflush
+    assert @flush_of_clover < @straight_of_ace_high
+    assert @pair_of_ace < @flush_of_clover
+    assert @highcard < @pair_of_ace
+  end
 end

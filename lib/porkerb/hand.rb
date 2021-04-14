@@ -2,6 +2,10 @@ require_relative "hand_rank"
 
 module Porkerb
   class Hand
+    include Comparable
+
+    attr_reader :rank
+
     def initialize(cards)
       @cards = cards
       @rank = HandRank.new(decide)
@@ -29,6 +33,10 @@ module Porkerb
       same_rank = @cards.all? { |c| c.same_rank? card }
       same_suit = @cards.all? { |c| c.same_suit? card }
       !same_rank && !same_suit
+    end
+
+    def <=>(other)
+      @rank <=> other.rank
     end
 
     def self.from(card_notations)
