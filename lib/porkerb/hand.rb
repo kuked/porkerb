@@ -47,7 +47,7 @@ module Porkerb
     private
 
     def _straight?
-      sorted = @cards.sort
+      sorted = @cards.sort.reverse
       if sorted.first.rank?("A") && sorted.last.rank?("2")
         sorted.shift
       end

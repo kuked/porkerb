@@ -30,4 +30,10 @@ class TestCard < Minitest::Test
   def test_priolity
     assert_equal 0, Card.new("H", "A").priolity
   end
+
+  def test_comparable
+    assert @jack_of_hearts < @ace_of_hearts
+    assert @three_of_spades < @jack_of_hearts
+    assert @ace_of_hearts == @ace_of_spades
+  end
 end
