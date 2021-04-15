@@ -36,7 +36,18 @@ module Porkerb
     end
 
     def <=>(other)
-      @rank <=> other.rank
+      if @rank == other.rank
+        max_rank <=> other.max_rank
+      else
+        @rank <=> other.rank
+      end
+    end
+
+    def max_rank
+      if straightflush?
+        sorted = @cards.sort.reverse
+        ace_to_five? ? sorted.last.rank : sorted.first.rank
+      end
     end
 
     def self.from(card_notations)
@@ -48,9 +59,7 @@ module Porkerb
 
     def _straight?
       sorted = @cards.sort.reverse
-      if sorted.first.rank?("A") && sorted.last.rank?("2")
-        sorted.shift
-      end
+      sorted.shift if ace_to_five?
 
       priolity = sorted.first.priolity
       expected = (priolity...priolity + sorted.length).to_a
@@ -69,6 +78,11 @@ module Porkerb
       return "flush"          if flush?
       return "one pair"       if pair?
       return "high card"
+    end
+
+    def ace_to_five?
+      sorted = @cards.sort.reverse
+      sorted.first.rank?("A") && sorted.last.rank?("2")
     end
   end
 end

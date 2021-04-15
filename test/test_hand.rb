@@ -53,4 +53,14 @@ class TestHand < Minitest::Test
     assert @pair_of_ace < @flush_of_clover
     assert @highcard < @pair_of_ace
   end
+
+  def test_comparable_straight_flush
+    straight_flush_H_2A = Hand.from(%w[H2 HA])
+    straight_flush_C_AK = Hand.from(%w[CA CK])
+    straight_flush_S_34 = Hand.from(%w[S3 S4])
+
+    assert @straightflush > straight_flush_H_2A
+    assert @straightflush == straight_flush_C_AK
+    assert straight_flush_H_2A < straight_flush_S_34
+  end
 end
