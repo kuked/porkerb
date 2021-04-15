@@ -44,7 +44,7 @@ module Porkerb
     end
 
     def max_rank
-      if straightflush?
+      if straightflush? || straight?
         sorted = @cards.sort.reverse
         ace_to_five? ? sorted.last.rank : sorted.first.rank
       end
