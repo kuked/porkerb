@@ -50,8 +50,8 @@ module Porkerb
     def max_rank
       if straightflush? || straight?
         ace_to_five? ? cards.last.rank : cards.first.rank
-      elsif pair?
-        cards.first.rank
+      else
+        cards
       end
     end
 

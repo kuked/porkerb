@@ -78,4 +78,18 @@ class TestHand < Minitest::Test
     assert pair_of_king_1 < @pair_of_ace
     assert pair_of_king_1 == pair_of_king_2
   end
+
+  def test_comparable_flush
+    flush_of_heart_1 = Hand.from(%w[H8 H3])
+    flush_of_heart_2 = Hand.from(%w[H2 H4])
+    assert @flush_of_clover < flush_of_heart_1
+    assert @flush_of_clover == flush_of_heart_2
+  end
+
+  def test_comparable_high_card
+    high_card_1 = Hand.from(%w[SK CJ])
+    high_card_2 = Hand.from(%w[HA D8])
+    assert @highcard > high_card_1
+    assert @highcard == high_card_2
+  end
 end
