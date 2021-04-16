@@ -4,11 +4,15 @@ module Porkerb
   class Hand
     include Comparable
 
-    attr_reader :rank
+    attr_reader :rank, :cards
 
     def initialize(cards)
       @cards = cards
-      @rank = HandRank.new(decide)
+      decide!
+    end
+
+    def cards
+      @cards.sort.reverse
     end
 
     def straightflush?
@@ -24,14 +28,14 @@ module Porkerb
     end
 
     def pair?
-      card = @cards.first
-      @cards.all? { |c| c.same_rank? card }
+      card = cards.first
+      cards.all? { |c| c.same_rank? card }
     end
 
     def highcard?
-      card = @cards.first
-      same_rank = @cards.all? { |c| c.same_rank? card }
-      same_suit = @cards.all? { |c| c.same_suit? card }
+      card = cards.first
+      same_rank = cards.all? { |c| c.same_rank? card }
+      same_suit = cards.all? { |c| c.same_suit? card }
       !same_rank && !same_suit
     end
 
@@ -45,22 +49,20 @@ module Porkerb
 
     def max_rank
       if straightflush? || straight?
-        sorted = @cards.sort.reverse
-        ace_to_five? ? sorted.last.rank : sorted.first.rank
+        ace_to_five? ? cards.last.rank : cards.first.rank
       elsif pair?
-        @cards.first.rank
+        cards.first.rank
       end
     end
 
     def self.from(card_notations)
-      cards = card_notations.map { |c| Card.from c }
-      Hand.new cards
+      Hand.new card_notations.map { |c| Card.from c }
     end
 
     private
 
     def _straight?
-      sorted = @cards.sort.reverse
+      sorted = cards.dup
       sorted.shift if ace_to_five?
 
       priolity = sorted.first.priolity
@@ -70,21 +72,27 @@ module Porkerb
     end
 
     def _flush?
-      card = @cards.first
-      @cards.all? { |c| c.same_suit? card }
+      card = cards.first
+      cards.all? { |c| c.same_suit? card }
     end
 
-    def decide
-      return "straight flush" if straightflush?
-      return "straight"       if straight?
-      return "flush"          if flush?
-      return "one pair"       if pair?
-      return "high card"
+    def decide!
+      hand = if straightflush?
+               :straight_flush
+             elsif straight?
+               :straight
+             elsif flush?
+               :flush
+             elsif pair?
+               :one_pair
+             else
+               :high_card
+             end
+      @rank = HandRank.new(hand)
     end
 
     def ace_to_five?
-      sorted = @cards.sort.reverse
-      sorted.first.rank?("A") && sorted.last.rank?("2")
+      cards.first.rank?("A") && cards.last.rank?("2")
     end
   end
 end

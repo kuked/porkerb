@@ -3,21 +3,21 @@ module Porkerb
     include Comparable
 
     @@priority = {
-      "straight flush" => 0,
-      "straight"       => 1,
-      "flush"          => 2,
-      "one pair"       => 3,
-      "high card"      => 4
+      :straight_flush => 0,
+      :straight       => 1,
+      :flush          => 2,
+      :one_pair       => 3,
+      :high_card      => 4
     }
 
-    attr_reader :rank
+    attr_reader :hand
 
-    def initialize(rank)
-      @rank = rank
+    def initialize(hand)
+      @hand = hand
     end
 
     def priolity
-      @@priority[rank]
+      @@priority[hand]
     end
 
     def <=>(other)
@@ -25,7 +25,7 @@ module Porkerb
     end
 
     def to_s
-      rank
+      hand
     end
   end
 end
