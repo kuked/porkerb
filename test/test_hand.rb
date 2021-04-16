@@ -71,4 +71,11 @@ class TestHand < Minitest::Test
     assert @straight_of_ace_low == straight_C2_SA
     assert @straight_of_ace_low < straight_H3_D4
   end
+
+  def test_comparable_one_pair
+    pair_of_king_1 = Hand.from(%w[SK CK])
+    pair_of_king_2 = Hand.from(%w[HK DK])
+    assert pair_of_king_1 < @pair_of_ace
+    assert pair_of_king_1 == pair_of_king_2
+  end
 end

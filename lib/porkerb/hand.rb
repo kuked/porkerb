@@ -47,6 +47,8 @@ module Porkerb
       if straightflush? || straight?
         sorted = @cards.sort.reverse
         ace_to_five? ? sorted.last.rank : sorted.first.rank
+      elsif pair?
+        @cards.first.rank
       end
     end
 
