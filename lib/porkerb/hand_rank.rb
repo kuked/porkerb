@@ -3,11 +3,12 @@ module Porkerb
     include Comparable
 
     @@priority = {
-      :straight_flush => 0,
-      :straight       => 1,
-      :flush          => 2,
-      :one_pair       => 3,
-      :high_card      => 4
+      :straight_flush  => 0,
+      :straight        => 1,
+      :flush           => 2,
+      :three_of_a_kind => 3,
+      :one_pair        => 4,
+      :high_card       => 5
     }
 
     attr_reader :hand

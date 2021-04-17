@@ -23,6 +23,11 @@ module Porkerb
       _straight? && !_flush?
     end
 
+    def threecard?
+      card = cards.first
+      cards.count { |c| c.same_rank? card } == 3
+    end
+
     def flush?
       !_straight? && _flush?
     end
@@ -82,6 +87,8 @@ module Porkerb
                :straight
              elsif flush?
                :flush
+             elsif threecard?
+               :three_of_a_kind
              elsif pair?
                :one_pair
              else
