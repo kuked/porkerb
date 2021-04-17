@@ -29,14 +29,14 @@ module Porkerb
 
     def pair?
       card = cards.first
-      cards.all? { |c| c.same_rank? card }
+      cards.count { |c| c.same_rank? card } == 2 # include myself
     end
 
     def highcard?
       card = cards.first
-      same_rank = cards.all? { |c| c.same_rank? card }
+      same_rank = cards.count { |c| c.same_rank? card } > 1 # include myself
       same_suit = cards.all? { |c| c.same_suit? card }
-      !same_rank && !same_suit
+      !same_rank && !same_suit && !_straight?
     end
 
     def <=>(other)
@@ -49,7 +49,7 @@ module Porkerb
 
     def max_rank
       if straightflush? || straight?
-        ace_to_five? ? cards.last.rank : cards.first.rank
+        ace_low? ? cards.last.rank : cards.first.rank
       else
         cards
       end
@@ -63,11 +63,10 @@ module Porkerb
 
     def _straight?
       sorted = cards.dup
-      sorted.shift if ace_to_five?
+      sorted.shift if ace_low?
 
       priolity = sorted.first.priolity
       expected = (priolity...priolity + sorted.length).to_a
-
       expected == sorted.map(&:priolity)
     end
 
@@ -91,7 +90,7 @@ module Porkerb
       @rank = HandRank.new(hand)
     end
 
-    def ace_to_five?
+    def ace_low?
       cards.first.rank?("A") && cards.last.rank?("2")
     end
   end
