@@ -8,6 +8,7 @@ module Porkerb
 
     def initialize(cards)
       @cards = cards
+      @group_by_rank = cards.map(&:priolity).group_by { |i| i }
       decide!
     end
 
@@ -32,14 +33,19 @@ module Porkerb
       !_straight? && _flush?
     end
 
+    def two_pair?
+      count_of_rank = @group_by_rank.values.map(&:count)
+      count_of_rank.count { |i| i == 2 } == 2
+    end
+
     def pair?
-      card = cards.first
-      cards.count { |c| c.same_rank? card } == 2 # include myself
+      count_of_rank = @group_by_rank.values.map(&:count)
+      count_of_rank.count { |i| i == 2 } == 1
     end
 
     def highcard?
+      same_rank = @group_by_rank.count != cards.count
       card = cards.first
-      same_rank = cards.count { |c| c.same_rank? card } > 1 # include myself
       same_suit = cards.all? { |c| c.same_suit? card }
       !same_rank && !same_suit && !_straight?
     end
@@ -89,6 +95,8 @@ module Porkerb
                :flush
              elsif threecard?
                :three_of_a_kind
+             elsif two_pair?
+               :two_pair?
              elsif pair?
                :one_pair
              else

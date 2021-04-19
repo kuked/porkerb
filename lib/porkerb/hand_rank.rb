@@ -7,8 +7,9 @@ module Porkerb
       :straight        => 1,
       :flush           => 2,
       :three_of_a_kind => 3,
-      :one_pair        => 4,
-      :high_card       => 5
+      :two_pair        => 4,
+      :one_pair        => 5,
+      :high_card       => 6
     }
 
     attr_reader :hand
