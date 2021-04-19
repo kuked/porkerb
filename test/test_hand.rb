@@ -9,9 +9,10 @@ class TestHand < Minitest::Test
     @straightflush        = Hand.from(%w[DA DK DQ])
     @straight_of_ace_high = Hand.from(%w[DA SK CQ])
     @straight_of_ace_low  = Hand.from(%w[S3 H2 CA])
-    @threecard            = Hand.from(%w[S6 D6 C6])
-    @pair_of_ace          = Hand.from(%w[SA HA H6])
     @flush_of_clover      = Hand.from(%w[C2 C4 C9])
+    @threecard            = Hand.from(%w[S6 D6 C6])
+    @two_pair             = Hand.from(%w[S7 H7 S8 D8 HJ])
+    @pair_of_queen        = Hand.from(%w[SQ HA HQ])
     @highcard             = Hand.from(%w[SA C8 S4])
   end
 
@@ -21,14 +22,14 @@ class TestHand < Minitest::Test
     refute @straight_of_ace_high.straightflush?
     refute @flush_of_clover.straightflush?
     refute @threecard.straightflush?
-    refute @pair_of_ace.highcard?
+    refute @pair_of_queen.straightflush?
     refute @highcard.straightflush?
   end
 
   def test_straight?
     assert @straight_of_ace_high.straight?
     assert @straight_of_ace_low.straight?
-    refute @pair_of_ace.straight?
+    refute @pair_of_queen.straight?
     refute @flush_of_clover.straight?
     refute @threecard.straight?
     refute @highcard.straight?
@@ -39,14 +40,14 @@ class TestHand < Minitest::Test
     assert @threecard.threecard?
     refute @straight_of_ace_high.threecard?
     refute @straight_of_ace_low.threecard?
-    refute @pair_of_ace.threecard?
+    refute @pair_of_queen.threecard?
     refute @flush_of_clover.threecard?
     refute @highcard.threecard?
     refute @straightflush.threecard?
   end
 
   def test_pair?
-    assert @pair_of_ace.pair?
+    assert @pair_of_queen.pair?
     refute @threecard.pair?
     refute @flush_of_clover.pair?
     refute @highcard.pair?
@@ -61,8 +62,12 @@ class TestHand < Minitest::Test
     refute @straightflush.flush?
     refute @straight_of_ace_low.flush?
     refute @straight_of_ace_high.flush?
-    refute @pair_of_ace.flush?
+    refute @pair_of_queen.flush?
     refute @highcard.flush?
+  end
+
+  def test_two_pair?
+    assert @two_pair.two_pair?
   end
 
   def test_highcard?
@@ -70,7 +75,7 @@ class TestHand < Minitest::Test
     refute @straightflush.highcard?
     refute @straight_of_ace_low.highcard?
     refute @straight_of_ace_high.highcard?
-    refute @pair_of_ace.highcard?
+    refute @pair_of_queen.highcard?
     refute @flush_of_clover.highcard?
     refute @threecard.highcard?
   end
@@ -79,8 +84,8 @@ class TestHand < Minitest::Test
     assert @straight_of_ace_high < @straightflush
     assert @flush_of_clover < @straight_of_ace_high
     assert @threecard < @flush_of_clover
-    assert @pair_of_ace < @threecard
-    assert @highcard < @pair_of_ace
+    assert @pair_of_queen < @threecard
+    assert @highcard < @pair_of_queen
   end
 
   def test_comparable_straight_flush
@@ -122,7 +127,7 @@ class TestHand < Minitest::Test
     pair_of_king_1 = Hand.from(%w[SK CK D6])
     pair_of_king_2 = Hand.from(%w[HK DK C6])
 
-    assert pair_of_king_1 < @pair_of_ace
+    assert pair_of_king_1 > @pair_of_queen
     assert pair_of_king_1 == pair_of_king_2
   end
 
