@@ -8,7 +8,7 @@ module Porkerb
 
     def initialize(cards)
       @cards = cards
-      @group_by_rank = cards.map(&:priolity).group_by { |i| i }
+      @group_by_rank = cards.group_by(&:priolity)
       decide!
     end
 
